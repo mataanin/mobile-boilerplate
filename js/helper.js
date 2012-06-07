@@ -97,9 +97,10 @@ MBP.hideUrlBarOnLoad = function () {
    * https://github.com/h5bp/mobile-boilerplate/wiki/JavaScript-Helper
 */
 
-MBP.fastButton = function (element, handler) {
+MBP.fastButton = function (element, handler, pressedClass) {
   this.handler = handler;
-	
+  this.pressedClass = typeof pressedClass === "undefined" ? "pressed" : pressedClass;	
+
 	if (element.length && element.length > 1) {
     for (var singleElIdx in element) {
       this.addClickEvent(element[singleElIdx]);
@@ -126,7 +127,8 @@ MBP.fastButton.prototype.onTouchStart = function(event) {
   document.body.addEventListener('touchmove', this, false);
   this.startX = event.touches[0].clientX;
   this.startY = event.touches[0].clientY;
-  element.style.backgroundColor = "rgba(0,0,0,.7)";
+
+  this.element.className+= ' ' + this.pressedClass;
 };
 
 MBP.fastButton.prototype.onTouchMove = function(event) {
@@ -145,14 +147,18 @@ MBP.fastButton.prototype.onClick = function(event) {
   if(event.type == 'touchend') {
     MBP.preventGhostClick(this.startX, this.startY);
   }
-  element.style.backgroundColor = "";
+  var pattern = new RegExp(" ?" + this.pressedClass, "gi");
+  this.element.className = this.element.className.replace(pattern, '');
+
 };
 
 MBP.fastButton.prototype.reset = function(event) {
   var element = event.srcElement;
 	rmEvt(element, "touchend", this, false);
 	rmEvt(document.body, "touchmove", this, false);
-  element.style.backgroundColor = "";
+
+  var pattern = new RegExp(" ?" + this.pressedClass, "gi");
+  this.element.className = this.element.className.replace(pattern, '');
 };
 
 MBP.fastButton.prototype.addClickEvent = function(element) {
