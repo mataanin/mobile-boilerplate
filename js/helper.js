@@ -99,9 +99,9 @@ MBP.hideUrlBarOnLoad = function () {
 
 MBP.fastButton = function (element, handler, pressedClass) {
   this.handler = handler;
-  this.pressedClass = typeof pressedClass === "undefined" ? "pressed" : pressedClass;	
+  this.pressedClass = typeof pressedClass === "undefined" ? "pressed" : pressedClass;
 
-	if (element.length && element.length > 1) {
+  if (element.length && element.length > 1) {
     for (var singleElIdx in element) {
       this.addClickEvent(element[singleElIdx]);
     }
@@ -111,7 +111,8 @@ MBP.fastButton = function (element, handler, pressedClass) {
 };
  
 MBP.fastButton.prototype.handleEvent = function(event) {
-	event = event || window.event;
+  event = event || window.event;
+  
   switch (event.type) {
     case 'touchstart': this.onTouchStart(event); break;
     case 'touchmove': this.onTouchMove(event); break;
@@ -149,7 +150,6 @@ MBP.fastButton.prototype.onClick = function(event) {
   }
   var pattern = new RegExp(" ?" + this.pressedClass, "gi");
   this.element.className = this.element.className.replace(pattern, '');
-
 };
 
 MBP.fastButton.prototype.reset = function(event) {
@@ -158,7 +158,7 @@ MBP.fastButton.prototype.reset = function(event) {
 	rmEvt(document.body, "touchmove", this, false);
 
   var pattern = new RegExp(" ?" + this.pressedClass, "gi");
-  this.element.className = this.element.className.replace(pattern, '');
+  this.element.className = this.element.className.replace(pattern, ''); };
 };
 
 MBP.fastButton.prototype.addClickEvent = function(element) {
